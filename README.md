@@ -48,8 +48,6 @@ This script automates various tasks for the Animix miniapp telegram.
     ```sh
     nano proxy.txt
     ```
-    format proxy user:pass@ip:port
-    ```
 5. Run the script:
     ```sh
     node main.js

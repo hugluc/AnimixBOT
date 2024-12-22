@@ -3,7 +3,6 @@
 # RECODE
 
 Animix BETA telegram miniapp bot
-![banner](img/image.png)
 
 This script automates various tasks for the Animix miniapp telegram.
 
@@ -22,10 +21,9 @@ This script automates various tasks for the Animix miniapp telegram.
 
 - Node.js installed on your machine
 - `users.txt` file containing user data follow instruction below to get:
-- Open Animix miniapp telegram [https://t.me/animix_game_bot](https://t.me/animix_game_bot?startapp=)
+- Open Animix miniapp telegram [https://t.me/animix_game_bot](https://t.me/animix_game_bot?startapp=6x5UVZF6ym38)
 - inspect or just F12 find application
 - in session storage find `tgWebAppData` and copy all value. `user=....`
-![usersData](img/image-1.png)
 
 ## Installation
 

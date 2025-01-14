@@ -1,5 +1,4 @@
 # AnimixBOT
-# Thanks To ZLK CYBER
 # RECODE
 
 Animix BETA telegram miniapp bot
@@ -50,6 +49,7 @@ This script automates various tasks for the Animix miniapp telegram.
     ```sh
     node main.js
     ```
+# Thanks To ZLK CYBER
 
 ## ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 

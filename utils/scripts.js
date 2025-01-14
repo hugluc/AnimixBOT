@@ -62,10 +62,13 @@ export async function fetchAllAchievements(headers, proxy) {
 // Fetch pet list
 export async function fetchPetList(headers, proxy) {
     const data = await requestWithRetry("/public/pet/list", { method: "GET", headers }, 3, proxy);
+    if (!data || !data.result) {
+        return { petIdsByStarAndClass: {}, allPetIds: [] };
+    };
     const petIdsByStarAndClass = {};
     const allPetIds = [];
 
-    for (const pet of data.result || []) {
+    for (const pet of data.result) {
         if (!petIdsByStarAndClass[pet.star]) petIdsByStarAndClass[pet.star] = {};
         if (!petIdsByStarAndClass[pet.star][pet.class]) petIdsByStarAndClass[pet.star][pet.class] = [];
 
@@ -83,11 +86,14 @@ export async function fetchPetList(headers, proxy) {
 // Fetch pet DNA list
 export async function fetchPetDnaList(headers, proxy) {
     const data = await requestWithRetry("/public/pet/dna/list", { method: "GET", headers }, 3, proxy);
+    if (!data || !data.result) {
+        return { momPetIds: [], dadPetIds: [], allPetIds: [] };
+    }
     const momPetIds = [];
     const dadPetIds = [];
     const allPetIds = [];
 
-    for (const pet of data.result || []) {
+    for (const pet of data.result) {
         const petAmount = parseInt(pet.amount, 10);
         for (let i = 0; i < petAmount; i++) {
             allPetIds.push(pet.item_id);
@@ -116,6 +122,23 @@ export async function fetchSeasonPass(headers, proxy) {
     return data?.result || [];
 }
 
+// Fetch bonus gatcha
+export async function fetchGatchaBonus(headers, proxy) {
+    const data = await requestWithRetry("/public/pet/dna/gacha/bonus", { method: "GET", headers }, 3, proxy);
+    return data?.result || [];
+}
+// Claim bonus gatcha 
+export async function claimGatchaBonus(headers, proxy, reward_no) {
+    const payload = { reward_no };
+    const data = await requestWithRetry("/public/pet/dna/gacha/bonus/claim", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload),
+    }, 3, proxy);
+    if (data?.result) {
+        log.info("Gatcha Bonus claimed successfully:", data.result);
+    }
+}
 // Claim season pass
 export async function claimSeasonPass(headers, proxy, seasonId, type, step) {
     const payload = { season_id: seasonId, type, step };
@@ -203,7 +226,7 @@ export async function claimAchievement(headers, proxy, questId) {
     }
 }
 
-// Get new pet 
+// Gatcha new pet
 export async function getNewPet(headers, proxy) {
     const data = await requestWithRetry("/public/pet/dna/gacha", {
         method: "POST",
@@ -216,4 +239,3 @@ export async function getNewPet(headers, proxy) {
     log.info("Gacha New Pet Success!", JSON.stringify(petInfo));
     return godPower;
 }
-
